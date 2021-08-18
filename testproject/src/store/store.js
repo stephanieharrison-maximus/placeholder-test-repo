@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+export const storeTemplate = {
   state: {
     count: 0
   },
@@ -23,5 +23,7 @@ const store = new Vuex.Store({
       context.commit('decrement', payload)
     }
   }
-})
+}
+
+const store = new Vuex.Store(storeTemplate)
 export default store;
