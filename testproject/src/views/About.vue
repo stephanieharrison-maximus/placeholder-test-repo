@@ -19,6 +19,8 @@ import Vuex from "vuex";
 import AddCounter from "@/components/AddCounter.vue";
 import RemoveCounter from "@/components/RemoveCounter.vue";
 import Counter from "@/components/Counter.vue";
+import store from '../store/store';
+import * as type from '../store/mutations/types';
 
 Vue.use(Vuex);
 
@@ -27,6 +29,17 @@ export default {
     Counter,
     AddCounter,
     RemoveCounter,
+  },
+  beforeRouteLeave(to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    console.log("beforeRouteLeave called", to, from)
+    store.dispatch({
+            type: type.Increment,
+            amount: 20
+          })
+    next()
   },
 };
 </script>
