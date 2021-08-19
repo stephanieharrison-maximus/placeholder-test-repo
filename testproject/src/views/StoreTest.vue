@@ -52,11 +52,7 @@ export default {
     // be navigated away from.
     // has access to `this` component instance.
     console.log("beforeRouteLeave called", to, from);
-    // store.dispatch({
-    //   type: type.Increment,
-    //   amount: 20,
-    // });
-    this.store.dispatch({
+    store.dispatch({
       type: type.Increment,
       amount: 20,
     });

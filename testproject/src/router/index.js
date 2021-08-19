@@ -5,7 +5,7 @@ import About from '@/views/About.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'Home',

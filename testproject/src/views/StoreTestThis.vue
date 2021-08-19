@@ -56,7 +56,7 @@ export default {
     //   type: type.Increment,
     //   amount: 20,
     // });
-    this.store.dispatch({
+    this.$store.dispatch({
       type: type.Increment,
       amount: 20,
     });
