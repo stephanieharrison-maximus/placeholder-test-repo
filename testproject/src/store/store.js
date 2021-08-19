@@ -15,7 +15,7 @@ export const storeTemplate = {
       return state.count = state.count - payload.amount;
     }
   },
-    actions: {
+  actions: {
     increment (context, payload) {
       context.commit('increment', payload)
     },

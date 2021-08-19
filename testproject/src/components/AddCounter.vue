@@ -13,16 +13,16 @@
 import store from '../store/store';
 import * as type from '../store/mutations/types';
 
-  export default {
-    methods: {
-        addCounter(){
-          store.dispatch({
-            type: type.Increment,
-            amount: 20
-          })
-        }
+export default {
+  methods: {
+    addCounter(){
+      store.dispatch({
+        type: type.Increment,
+        amount: 20
+      })
     }
   }
+}
 </script>
 
 <style>

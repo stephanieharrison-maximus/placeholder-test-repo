@@ -1,6 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Vue from "vue";
 import VueRouter from "vue-router";
 import { cloneDeep } from "lodash";
 import StoreTest from "@/views/StoreTest.vue";
@@ -43,19 +42,19 @@ describe("About.vue store.dispatch", () => {
     expect(result).toEqual("defaultvalue");
   });
 
-  it("doesn't track dispatch for store.dispatch", () => {
+  it("[EXPECTED BROKEN] doesn't track dispatch for store.dispatch", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
-    const result = wrapper.vm.defaultDispatch();
+    wrapper.vm.defaultDispatch();
     expect(spyOnDispatch).not.toHaveBeenCalled();
   });
 
   it("tracks dispatch for this.$store.dispatch", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
-    const result = wrapper.vm.defaultDispatch2();
+    wrapper.vm.defaultDispatch2();
     expect(spyOnDispatch).toHaveBeenCalled();
   });
 
-  it("doesn't call dispatch when called through Component", () => {
+  it("[EXPECTED BROKEN]doesn't call dispatch when called through Component", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
     StoreTest.beforeRouteLeave(routes[0], routes[1], next);
     expect(spyOnDispatch).not.toHaveBeenCalled();
@@ -95,19 +94,19 @@ describe("About.vue this.$store.dispatch", () => {
     expect(result).toEqual("defaultvalue");
   });
 
-  it("doesn't track dispatch for store.dispatch", () => {
+  it("[EXPECTED BROKEN] doesn't track dispatch for store.dispatch", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
-    const result = wrapper.vm.defaultDispatch();
+    wrapper.vm.defaultDispatch();
     expect(spyOnDispatch).not.toHaveBeenCalled();
   });
 
   it("tracks dispatch for this.$store.dispatch", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
-    const result = wrapper.vm.defaultDispatch2();
+    wrapper.vm.defaultDispatch2();
     expect(spyOnDispatch).toHaveBeenCalled();
   });
 
-  it("doesn't call dispatch when called through Component", () => {
+  it("[EXPECTED BROKEN] doesn't call dispatch when called through Component", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
     StoreTestThis.beforeRouteLeave(routes[0], routes[1], next);
     expect(spyOnDispatch).not.toHaveBeenCalled();
@@ -116,6 +115,35 @@ describe("About.vue this.$store.dispatch", () => {
   it("works without breaking", () => {
     const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
     StoreTestThis.beforeRouteLeave(routes[0], routes[1], next);
+    expect(spyOnDispatch).toHaveBeenCalled();
+  });
+});
+
+describe.only("About.vue reference test", () => {
+  let wrapper;
+  let store;
+
+  beforeEach(() => {
+    store = new Vuex.Store(cloneDeep(storeTemplate));
+    wrapper = mount(StoreTest, {
+      localVue,
+      store,
+      router,
+    });
+  });
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
+
+  it("renders", () => {
+    expect(wrapper.element).toBeDefined();
+  });
+
+  it("works without breaking", () => {
+    const spyOnDispatch = jest.spyOn(wrapper.vm.$store, "dispatch");
+    wrapper.vm.beforeRouteLeave(routes[0], routes[1], next);
     expect(spyOnDispatch).toHaveBeenCalled();
   });
 });
